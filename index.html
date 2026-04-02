@@ -1,0 +1,3053 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🖥️ Histoire de l'Informatique — Terminale NSI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #111640;
+            --bg-card: #161b4a;
+            --bg-card-hover: #1c2260;
+            --accent-blue: #4f7df9;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --text-primary: #e8eaf6;
+            --text-secondary: #9ca4c7;
+            --text-muted: #6b73a0;
+            --border-color: #2a3070;
+            --glow-blue: rgba(79, 125, 249, 0.3);
+            --glow-cyan: rgba(0, 212, 255, 0.3);
+            --glow-purple: rgba(139, 92, 246, 0.3);
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-animation .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            opacity: 0.15;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Header */
+        .hero {
+            text-align: center;
+            padding: 60px 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, rgba(79,125,249,0.12) 0%, rgba(139,92,246,0.12) 50%, rgba(236,72,153,0.08) 100%);
+            border-radius: 28px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-cyan));
+            border-radius: 29px;
+            z-index: -1;
+            opacity: 0.4;
+            animation: borderGlow 4s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            right: 1px;
+            bottom: 1px;
+            background: linear-gradient(135deg, rgba(10,14,39,0.97) 0%, rgba(17,22,64,0.97) 100%);
+            border-radius: 27px;
+            z-index: -1;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.3; filter: blur(2px); }
+            100% { opacity: 0.6; filter: blur(4px); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(79, 125, 249, 0.15);
+            border: 1px solid rgba(79, 125, 249, 0.3);
+            color: var(--accent-cyan);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.15;
+            animation: fadeInDown 0.6s ease 0.1s both;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+            animation: fadeInDown 0.6s ease 0.2s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            background: var(--bg-secondary);
+            padding: 6px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+            background: rgba(79, 125, 249, 0.1);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 20px rgba(79, 125, 249, 0.4);
+        }
+
+        .nav-tab .tab-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 36px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            border-color: rgba(79, 125, 249, 0.3);
+            box-shadow: 0 8px 40px rgba(79, 125, 249, 0.08);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .section-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .section-icon.blue { background: rgba(79, 125, 249, 0.15); }
+        .section-icon.purple { background: rgba(139, 92, 246, 0.15); }
+        .section-icon.green { background: rgba(16, 185, 129, 0.15); }
+        .section-icon.orange { background: rgba(245, 158, 11, 0.15); }
+        .section-icon.pink { background: rgba(236, 72, 153, 0.15); }
+        .section-icon.cyan { background: rgba(0, 212, 255, 0.15); }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Objectives */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px;
+            background: rgba(79, 125, 249, 0.06);
+            border-radius: 14px;
+            border: 1px solid rgba(79, 125, 249, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            background: rgba(79, 125, 249, 0.1);
+            border-color: rgba(79, 125, 249, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .objective-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .objective-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .objective-text strong {
+            color: var(--text-primary);
+        }
+
+        /* Events Table */
+        .events-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .events-table th {
+            text-align: left;
+            padding: 14px 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .events-table td {
+            padding: 16px 20px;
+            background: rgba(79, 125, 249, 0.04);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .events-table tr:hover td {
+            background: rgba(79, 125, 249, 0.1);
+        }
+
+        .events-table tr td:first-child {
+            border-radius: 12px 0 0 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 1.05rem;
+        }
+
+        .events-table tr td:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .event-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-purple);
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .detail-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .tag-concept { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .tag-machine { background: rgba(79, 125, 249, 0.15); color: #93b4fd; }
+        .tag-composant { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .tag-reseau { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; }
+        .tag-personnel { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+
+        /* Interactive Timeline */
+        .timeline-container {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-cyan));
+            border-radius: 3px;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 45%;
+            padding: 24px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 12px 40px rgba(79, 125, 249, 0.15);
+        }
+
+        .timeline-item.left {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .timeline-item.right {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 20px var(--glow-blue);
+            z-index: 2;
+        }
+
+        .timeline-item.left .timeline-dot {
+            right: -39px;
+        }
+
+        .timeline-item.right .timeline-dot {
+            left: -39px;
+        }
+
+        .timeline-connector {
+            position: absolute;
+            top: 37px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .timeline-item.left .timeline-connector {
+            right: -30px;
+        }
+
+        .timeline-item.right .timeline-connector {
+            left: -30px;
+        }
+
+        .timeline-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .timeline-inventor {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding: 4px 12px;
+            background: rgba(139, 92, 246, 0.12);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #a78bfa;
+            font-weight: 500;
+        }
+
+        /* Drag and Drop Activity */
+        .dnd-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .dnd-panel {
+            background: rgba(79, 125, 249, 0.04);
+            border-radius: 16px;
+            border: 2px dashed var(--border-color);
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .dnd-panel-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .draggable-item {
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            position: relative;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(79, 125, 249, 0.3);
+            z-index: 100;
+        }
+
+        .draggable-item:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-card-hover);
+        }
+
+        .draggable-item .drag-handle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .draggable-item .item-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-size: 0.95rem;
+            min-width: 48px;
+        }
+
+        .draggable-item .item-name {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .draggable-item.correct {
+            border-color: var(--success) !important;
+            background: rgba(16, 185, 129, 0.1) !important;
+        }
+
+        .draggable-item.incorrect {
+            border-color: var(--error) !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed rgba(79, 125, 249, 0.2);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .drop-zone .placeholder-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .drop-zone-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        /* Score Display */
+        .score-panel {
+            background: linear-gradient(135deg, rgba(79, 125, 249, 0.12), rgba(139, 92, 246, 0.12));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .score-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 20px rgba(79, 125, 249, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(79, 125, 249, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(79, 125, 249, 0.12);
+            color: var(--accent-blue);
+            border: 1px solid rgba(79, 125, 249, 0.25);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(79, 125, 249, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: white;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--accent-orange), #d97706);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* Rubric Table */
+        .rubric-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .rubric-table th {
+            background: rgba(79, 125, 249, 0.12);
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rubric-table td {
+            padding: 16px 20px;
+            font-size: 0.92rem;
+            border-bottom: 1px solid rgba(42, 48, 112, 0.5);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .rubric-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rubric-table tr:hover td {
+            background: rgba(79, 125, 249, 0.05);
+        }
+
+        .rubric-table .points {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .rubric-table .total-row td {
+            background: rgba(79, 125, 249, 0.1);
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+
+        .rubric-table .total-row .points {
+            font-size: 1.3rem;
+            color: var(--accent-green);
+        }
+
+        .criteria-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Reflection */
+        .reflection-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(139, 92, 246, 0.08));
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .reflection-question {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .reflection-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(10, 14, 39, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .reflection-textarea:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+
+        .reflection-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Steps */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .step-card {
+            padding: 28px 24px;
+            background: rgba(79, 125, 249, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(79, 125, 249, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 125, 249, 0.3);
+            box-shadow: 0 8px 30px rgba(79, 125, 249, 0.1);
+        }
+
+        .step-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, rgba(79, 125, 249, 0.3), rgba(139, 92, 246, 0.3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .step-duration {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background: rgba(245, 158, 11, 0.12);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Link card */
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(0, 212, 255, 0.08));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .link-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.12);
+        }
+
+        .link-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(16, 185, 129, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .link-info h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .link-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .link-url {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--accent-cyan);
+            margin-top: 4px;
+        }
+
+        /* Quiz section */
+        .quiz-item {
+            background: rgba(79, 125, 249, 0.04);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .quiz-question-number {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-left: 42px;
+        }
+
+        .quiz-option {
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-card-hover);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent-blue);
+            background: rgba(79, 125, 249, 0.12);
+        }
+
+        .quiz-option.correct-answer {
+            border-color: var(--success) !important;
+            background: rgba(16, 185, 129, 0.12) !important;
+        }
+
+        .quiz-option.wrong-answer {
+            border-color: var(--error) !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .quiz-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--text-muted);
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option.selected .quiz-radio {
+            border-color: var(--accent-blue);
+        }
+
+        .quiz-option.selected .quiz-radio::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .progress-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(79, 125, 249, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 10px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Info boxes */
+        .info-box {
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box.tip {
+            background: rgba(79, 125, 249, 0.08);
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .info-box.warning {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .info-box.success {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .info-box-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            z-index: 9999;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #065f46, #064e3b);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #a7f3d0;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #7f1d1d, #6b1a1a);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #1e3a5f, #172554);
+            border: 1px solid rgba(79, 125, 249, 0.3);
+            color: #bfdbfe;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-results {
+            text-align: center;
+        }
+
+        .result-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .result-circle.excellent {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 3px solid var(--success);
+        }
+
+        .result-circle.good {
+            background: linear-gradient(135deg, rgba(79, 125, 249, 0.15), rgba(79, 125, 249, 0.05));
+            border: 3px solid var(--accent-blue);
+        }
+
+        .result-circle.average {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+            border: 3px solid var(--warning);
+        }
+
+        .result-circle.poor {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+            border: 3px solid var(--error);
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        .result-total {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 16px 0;
+        }
+
+        .result-details {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .result-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(42, 48, 112, 0.3);
+            font-size: 0.9rem;
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-tabs, .btn-group, .dnd-container, .notification, .bg-animation {
+                display: none !important;
+            }
+            body {
+                background: white;
+                color: black;
+            }
+            .section-card, .hero {
+                border: 1px solid #ddd;
+                background: white;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2rem; }
+            .timeline-item { width: 85%; margin-left: 15% !important; margin-right: 0 !important; }
+            .timeline-line { left: 8%; }
+            .timeline-item .timeline-dot { left: -33px !important; right: auto !important; }
+            .timeline-item .timeline-connector { left: -24px !important; right: auto !important; }
+            .dnd-container { grid-template-columns: 1fr; }
+            .quiz-options { grid-template-columns: 1fr; }
+            .hero-stats { gap: 20px; }
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 30px 15px; }
+            .section-card { padding: 20px; }
+            .container { padding: 10px; }
+            .nav-tab { min-width: 100px; font-size: 0.8rem; padding: 10px 14px; }
+        }
+
+        /* Tooltip */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            z-index: 100;
+            color: var(--text-secondary);
+        }
+
+        .tooltip-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Checkmark animation */
+        .checkmark {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--success);
+            position: relative;
+        }
+
+        .checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        /* Typing effect for detail */
+        .typing-text {
+            border-right: 2px solid var(--accent-cyan);
+            animation: blink 1s step-end infinite;
+            display: inline-block;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Cards grid for inventions detail */
+        .invention-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .invention-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .invention-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .invention-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 125, 249, 0.3);
+            box-shadow: 0 12px 40px rgba(79, 125, 249, 0.1);
+        }
+
+        .invention-card .inv-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 6px;
+        }
+
+        .invention-card .inv-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .invention-card .inv-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .invention-card .inv-inventor {
+            margin-top: 10px;
+            padding: 6px 14px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #a78bfa;
+        }
+
+        /* Hidden content for detail toggle */
+        .expandable {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .expandable.expanded {
+            max-height: 500px;
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Timer */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(79, 125, 249, 0.1);
+            z-index: 9999;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-blue));
+            transition: width 1s linear;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .timer-display {
+            position: fixed;
+            top: 12px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .timer-display.show {
+            display: flex;
+        }
+
+        /* Confetti container */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Timer Bar -->
+    <div class="timer-bar" id="timerBar">
+        <div class="timer-fill" id="timerFill" style="width: 100%"></div>
+    </div>
+    <div class="timer-display" id="timerDisplay">
+        ⏱️ <span id="timerText">45:00</span>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Confetti -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-badge">
+                <span>🎓</span> Terminale NSI — Activité Pédagogique
+            </div>
+            <h1>🖥️ Histoire de l'Informatique</h1>
+            <p class="subtitle">
+                Explorez les grandes étapes de l'évolution informatique, de la machine universelle de Turing 
+                au premier micro-ordinateur familial. Construisez une frise chronologique interactive et 
+                découvrez comment chaque innovation a transformé le monde.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">12</div>
+                    <div class="label">Événements clés</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">45</div>
+                    <div class="label">Années d'histoire</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">/20</div>
+                    <div class="label">Barème</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">4</div>
+                    <div class="label">Phases</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('consignes')">
+                <span class="tab-icon">📋</span> Consignes
+            </button>
+            <button class="nav-tab" onclick="switchTab('frise')">
+                <span class="tab-icon">📅</span> Frise Chronologique
+            </button>
+            <button class="nav-tab" onclick="switchTab('interactive')">
+                <span class="tab-icon">🎮</span> Activité Interactive
+            </button>
+            <button class="nav-tab" onclick="switchTab('quiz')">
+                <span class="tab-icon">❓</span> Quiz
+            </button>
+            <button class="nav-tab" onclick="switchTab('bareme')">
+                <span class="tab-icon">📊</span> Barème
+            </button>
+            <button class="nav-tab" onclick="switchTab('reflexion')">
+                <span class="tab-icon">💡</span> Réflexion
+            </button>
+        </nav>
+
+        <!-- TAB 1: Consignes -->
+        <div class="tab-content active" id="tab-consignes">
+            <!-- Objectifs -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon blue">🎯</div>
+                    <div>
+                        <div class="section-title">Objectifs Pédagogiques</div>
+                        <div class="section-subtitle">Ce que vous allez apprendre</div>
+                    </div>
+                </div>
+                <div class="objectives-grid">
+                    <div class="objective-item">
+                        <div class="objective-number">1</div>
+                        <div class="objective-text">
+                            <strong>Comprendre</strong> les grandes étapes de l'évolution de l'informatique, du concept théorique aux réalisations concrètes.
+                        </div>
+                    </div>
+                    <div class="objective-item">
+                        <div class="objective-number">2</div>
+                        <div class="objective-text">
+                            <strong>Situer</strong> les inventions majeures dans le temps et comprendre leur enchaînement logique.
+                        </div>
+                    </div>
+                    <div class="objective-item">
+                        <div class="objective-number">3</div>
+                        <div class="objective-text">
+                            <strong>Développer</strong> les compétences d'analyse chronologique et de synthèse historique.
+                        </div>
+                    </div>
+                    <div class="objective-item">
+                        <div class="objective-number">4</div>
+                        <div class="objective-text">
+                            <strong>Relier</strong> les innovations technologiques à leur contexte historique et sociétal.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Déroulement -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon purple">🚀</div>
+                    <div>
+                        <div class="section-title">Déroulement de l'Activité</div>
+                        <div class="section-subtitle">4 phases progressives</div>
+                    </div>
+                </div>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-title">Phase de Recherche</div>
+                        <div class="step-desc">Effectuez une recherche rapide sur chaque invention : inventeur, contexte, importance historique.</div>
+                        <div class="step-duration">⏱️ 15 minutes</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-title">Construction de la Frise</div>
+                        <div class="step-desc">Réalisez votre frise chronologique numérique (frisechronos.fr) ou sur papier, claire et ordonnée.</div>
+                        <div class="step-duration">⏱️ 20 minutes</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-title">Annotations</div>
+                        <div class="step-desc">Ajoutez une courte explication sous chaque date : inventeur, principe, impact sur l'informatique.</div>
+                        <div class="step-duration">⏱️ 10 minutes</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">04</div>
+                        <div class="step-title">Réflexion Finale</div>
+                        <div class="step-desc">Répondez à la question de réflexion en argumentant votre choix (minimum 5 lignes).</div>
+                        <div class="step-duration">⏱️ 10 minutes</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="startTimer()">
+                        ⏱️ Démarrer le Chronomètre (55 min)
+                    </button>
+                    <button class="btn btn-secondary" onclick="stopTimer()">
+                        ⏹️ Arrêter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Événements à intégrer -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon green">📜</div>
+                    <div>
+                        <div class="section-title">Événements à Intégrer</div>
+                        <div class="section-subtitle">12 dates clés de l'histoire informatique</div>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="events-table">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Date</th>
+                                <th>Événement</th>
+                                <th>Catégorie</th>
+                                <th>Détails</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="event-number">1</span></td>
+                                <td>1936</td>
+                                <td>Machine universelle (Machine de Turing)</td>
+                                <td><span class="detail-tag tag-concept">Concept</span></td>
+                                <td>Modèle théorique fondamental par Alan Turing</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">2</span></td>
+                                <td>1938</td>
+                                <td>Premier ordinateur</td>
+                                <td><span class="detail-tag tag-machine">Machine</span></td>
+                                <td>Première réalisation concrète d'un calculateur</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">3</span></td>
+                                <td>1938</td>
+                                <td>Ordinateur mécanique Z1 en binaire</td>
+                                <td><span class="detail-tag tag-machine">Machine</span></td>
+                                <td>Conçu par Konrad Zuse — Machine à programmes externes</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">4</span></td>
+                                <td>1942</td>
+                                <td>Machines électroniques</td>
+                                <td><span class="detail-tag tag-machine">Machine</span></td>
+                                <td>Projet non achevé — ABC d'Atanasoff-Berry</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">5</span></td>
+                                <td>1943</td>
+                                <td>Machine à tubes à vide</td>
+                                <td><span class="detail-tag tag-machine">Machine</span></td>
+                                <td>Colossus — Utilisée pour décrypter les codes nazis</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">6</span></td>
+                                <td>1944</td>
+                                <td>MARK 1 — Ordinateur électromécanique</td>
+                                <td><span class="detail-tag tag-machine">Machine</span></td>
+                                <td>Pesait 5 tonnes — Développé par IBM et Harvard</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">7</span></td>
+                                <td>1947</td>
+                                <td>Transistor</td>
+                                <td><span class="detail-tag tag-composant">Composant</span></td>
+                                <td>Inventé aux Bell Labs — Remplace les tubes à vide</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">8</span></td>
+                                <td>1948</td>
+                                <td>Machine à programmes enregistrés</td>
+                                <td><span class="detail-tag tag-concept">Concept</span></td>
+                                <td>Architecture de Von Neumann — Manchester Baby</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">9</span></td>
+                                <td>1958</td>
+                                <td>Circuit intégré</td>
+                                <td><span class="detail-tag tag-composant">Composant</span></td>
+                                <td>Inventé par Jack Kilby (Texas Instruments)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">10</span></td>
+                                <td>1969</td>
+                                <td>Premier réseau Internet (ARPANET)</td>
+                                <td><span class="detail-tag tag-reseau">Réseau</span></td>
+                                <td>Réseau militaire américain — Ancêtre d'Internet</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">11</span></td>
+                                <td>1971</td>
+                                <td>Microprocesseur (Intel 4004)</td>
+                                <td><span class="detail-tag tag-composant">Composant</span></td>
+                                <td>Premier processeur sur une seule puce — Intel</td>
+                            </tr>
+                            <tr>
+                                <td><span class="event-number">12</span></td>
+                                <td>1981</td>
+                                <td>Micro-ordinateur familial ZX81</td>
+                                <td><span class="detail-tag tag-personnel">Personnel</span></td>
+                                <td>Sinclair — Démocratisation de l'informatique</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="http://www.frisechronos.fr/DojoMain.htm" target="_blank" class="link-card">
+                    <div class="link-icon">🔗</div>
+                    <div class="link-info">
+                        <h4>Créer votre frise en ligne</h4>
+                        <p>Utilisez l'outil FriseChronos pour construire votre frise chronologique numérique</p>
+                        <div class="link-url">http://www.frisechronos.fr/DojoMain.htm</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- TAB 2: Frise Chronologique -->
+        <div class="tab-content" id="tab-frise">
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon cyan">📅</div>
+                    <div>
+                        <div class="section-title">Frise Chronologique Interactive</div>
+                        <div class="section-subtitle">De 1936 à 1981 — Les jalons de l'informatique</div>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <span class="info-box-icon">💡</span>
+                    <div>Cliquez sur chaque événement pour afficher plus de détails. Les couleurs indiquent la catégorie : 
+                    <span style="color: #a78bfa">■ Concept</span> · 
+                    <span style="color: #93b4fd">■ Machine</span> · 
+                    <span style="color: #6ee7b7">■ Composant</span> · 
+                    <span style="color: #f9a8d4">■ Réseau</span> · 
+                    <span style="color: #fcd34d">■ Personnel</span></div>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #a78bfa; box-shadow: 0 0 20px rgba(167,139,250,0.4)"></div>
+                        <div class="timeline-year">1936</div>
+                        <div class="timeline-title">Machine Universelle de Turing</div>
+                        <div class="timeline-desc">Alan Turing propose le concept théorique d'une machine capable d'exécuter n'importe quel algorithme. Ce modèle mathématique pose les bases fondamentales de l'informatique moderne.</div>
+                        <div class="timeline-inventor">👤 Alan Turing — Mathématicien britannique</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(167,139,250,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> La machine de Turing n'est pas un objet physique mais un modèle théorique. Elle résout le problème de la décidabilité posé par David Hilbert. Ce concept est la base de tout ce qu'un ordinateur peut calculer.<br>
+                                <strong>Impact :</strong> Fondation de la science informatique théorique.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item right" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #93b4fd; box-shadow: 0 0 20px rgba(147,180,253,0.4)"></div>
+                        <div class="timeline-year">1938</div>
+                        <div class="timeline-title">Premier Ordinateur & Z1 de Konrad Zuse</div>
+                        <div class="timeline-desc">Konrad Zuse construit le Z1, premier ordinateur mécanique utilisant le système binaire et des programmes sur bandes perforées (programmes externes).</div>
+                        <div class="timeline-inventor">👤 Konrad Zuse — Ingénieur allemand</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(147,180,253,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le Z1 était entièrement mécanique et fonctionnait avec des plaques de métal. Bien qu'il avait des problèmes de fiabilité, il introduisait le calcul en virgule flottante binaire.<br>
+                                <strong>Impact :</strong> Premier pas vers la réalisation concrète d'un calculateur programmable.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #93b4fd; box-shadow: 0 0 20px rgba(147,180,253,0.4)"></div>
+                        <div class="timeline-year">1942</div>
+                        <div class="timeline-title">Machines Électroniques (ABC)</div>
+                        <div class="timeline-desc">L'Atanasoff-Berry Computer (ABC) est le premier calculateur électronique, mais le projet reste non achevé et ne sera jamais pleinement opérationnel.</div>
+                        <div class="timeline-inventor">👤 John Atanasoff & Clifford Berry</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(147,180,253,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Développé à l'Iowa State University, l'ABC utilisait des tubes à vide pour le calcul binaire. Bien que non achevé, il a influencé la conception de l'ENIAC.<br>
+                                <strong>Impact :</strong> Transition du mécanique vers l'électronique.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item right" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #93b4fd; box-shadow: 0 0 20px rgba(147,180,253,0.4)"></div>
+                        <div class="timeline-year">1943</div>
+                        <div class="timeline-title">Machine à Tubes à Vide (Colossus)</div>
+                        <div class="timeline-desc">Le Colossus est utilisé par les Britanniques pour décrypter les messages chiffrés allemands (code Lorenz) pendant la Seconde Guerre mondiale.</div>
+                        <div class="timeline-inventor">👤 Tommy Flowers — Ingénieur britannique</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(147,180,253,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Machine secrète utilisant 1 500 tubes à vide. Son existence n'a été révélée qu'en 2000. Elle a joué un rôle crucial dans la victoire des Alliés.<br>
+                                <strong>Impact :</strong> Démonstration de la puissance du calcul électronique.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #93b4fd; box-shadow: 0 0 20px rgba(147,180,253,0.4)"></div>
+                        <div class="timeline-year">1944</div>
+                        <div class="timeline-title">Harvard MARK 1</div>
+                        <div class="timeline-desc">Ordinateur électromécanique pesant 5 tonnes, développé par IBM et l'université Harvard. Il mesure 15 mètres de long et utilise des relais électromécaniques.</div>
+                        <div class="timeline-inventor">👤 Howard Aiken — IBM & Harvard</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(147,180,253,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le MARK 1 contenait 800 km de câbles et 3 millions de connexions. Il effectuait une multiplication en 6 secondes. Grace Hopper y a travaillé comme programmeuse.<br>
+                                <strong>Impact :</strong> Premier grand ordinateur américain fonctionnel.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item right" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #6ee7b7; box-shadow: 0 0 20px rgba(110,231,183,0.4)"></div>
+                        <div class="timeline-year">1947</div>
+                        <div class="timeline-title">Invention du Transistor</div>
+                        <div class="timeline-desc">Les Bell Labs inventent le transistor, composant électronique révolutionnaire qui remplace les tubes à vide — plus petit, plus fiable, moins énergivore.</div>
+                        <div class="timeline-inventor">👤 Bardeen, Brattain & Shockley — Bell Labs</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(110,231,183,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le transistor est un interrupteur électronique miniature. Il a valu le prix Nobel de physique en 1956 à ses inventeurs. C'est le composant fondamental de toute l'électronique moderne.<br>
+                                <strong>Impact :</strong> Miniaturisation de l'informatique — Début de la 2ème génération d'ordinateurs.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #a78bfa; box-shadow: 0 0 20px rgba(167,139,250,0.4)"></div>
+                        <div class="timeline-year">1948</div>
+                        <div class="timeline-title">Machine à Programmes Enregistrés</div>
+                        <div class="timeline-desc">Le Manchester Baby (SSEM) est le premier ordinateur à exécuter un programme stocké en mémoire, concrétisant l'architecture de Von Neumann.</div>
+                        <div class="timeline-inventor">👤 Architecture de Von Neumann — Manchester</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(167,139,250,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Avant cela, les programmes étaient « câblés » ou lus depuis des supports externes. Le concept de programme enregistré en mémoire est la base de tous les ordinateurs actuels.<br>
+                                <strong>Impact :</strong> Architecture fondamentale encore utilisée aujourd'hui.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item right" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #6ee7b7; box-shadow: 0 0 20px rgba(110,231,183,0.4)"></div>
+                        <div class="timeline-year">1958</div>
+                        <div class="timeline-title">Circuit Intégré</div>
+                        <div class="timeline-desc">Jack Kilby invente le circuit intégré chez Texas Instruments : plusieurs transistors sur un même support semi-conducteur. Début de la microélectronique.</div>
+                        <div class="timeline-inventor">👤 Jack Kilby — Texas Instruments (Nobel 2000)</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(110,231,183,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le circuit intégré permet d'intégrer des milliers, puis des milliards de transistors sur une seule puce. Robert Noyce (futur fondateur d'Intel) développera aussi indépendamment cette technologie.<br>
+                                <strong>Impact :</strong> Miniaturisation extrême — 3ème génération d'ordinateurs.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #f9a8d4; box-shadow: 0 0 20px rgba(249,168,212,0.4)"></div>
+                        <div class="timeline-year">1969</div>
+                        <div class="timeline-title">Premier Réseau Internet (ARPANET)</div>
+                        <div class="timeline-desc">ARPANET, le premier réseau d'ordinateurs à commutation de paquets, est mis en service par le département de la Défense américain. Ancêtre d'Internet.</div>
+                        <div class="timeline-inventor">👤 DARPA — Département de la Défense US</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(249,168,212,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le premier message envoyé ("LO" — le système a planté avant "LOGIN") relie l'UCLA à Stanford le 29 octobre 1969. Le réseau connectait initialement 4 universités.<br>
+                                <strong>Impact :</strong> Naissance de la mise en réseau — Base d'Internet moderne.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item right" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #6ee7b7; box-shadow: 0 0 20px rgba(110,231,183,0.4)"></div>
+                        <div class="timeline-year">1971</div>
+                        <div class="timeline-title">Microprocesseur Intel 4004</div>
+                        <div class="timeline-desc">Intel lance le 4004, premier microprocesseur commercial. Un processeur complet sur une seule puce de silicium : 2 300 transistors, 740 kHz.</div>
+                        <div class="timeline-inventor">👤 Ted Hoff, Federico Faggin — Intel</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(110,231,183,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Initialement conçu pour une calculatrice japonaise (Busicom), le 4004 contenait 2 300 transistors. Un smartphone actuel en contient des milliards !<br>
+                                <strong>Impact :</strong> Rend possible l'ordinateur personnel — 4ème génération d'ordinateurs.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+
+                    <div class="timeline-item left" onclick="toggleTimelineDetail(this)">
+                        <div class="timeline-connector"></div>
+                        <div class="timeline-dot" style="background: #fcd34d; box-shadow: 0 0 20px rgba(252,211,77,0.4)"></div>
+                        <div class="timeline-year">1981</div>
+                        <div class="timeline-title">Micro-ordinateur Familial ZX81</div>
+                        <div class="timeline-desc">Sinclair lance le ZX81, micro-ordinateur abordable qui démocratise l'informatique familiale. Vendu à des millions d'exemplaires grâce à son prix accessible.</div>
+                        <div class="timeline-inventor">👤 Clive Sinclair — Sinclair Research</div>
+                        <div class="expandable">
+                            <div style="margin-top: 12px; padding: 12px; background: rgba(252,211,77,0.08); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                <strong>Contexte :</strong> Le ZX81 ne coûtait que 69,95£ (en kit) ou 99,95£ (assemblé). Avec seulement 1 Ko de RAM, il a initié toute une génération à la programmation en BASIC.<br>
+                                <strong>Impact :</strong> Démocratisation de l'informatique — L'ordinateur entre dans les foyers.
+                            </div>
+                        </div>
+                        <button class="expand-btn">▼ En savoir plus</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invention Cards -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon orange">🔍</div>
+                    <div>
+                        <div class="section-title">Fiches de Recherche</div>
+                        <div class="section-subtitle">Synthèse des informations clés pour chaque invention</div>
+                    </div>
+                </div>
+                <div class="invention-cards">
+                    <div class="invention-card">
+                        <div class="inv-year">1936</div>
+                        <div class="inv-title">Machine Universelle</div>
+                        <div class="inv-desc">Modèle théorique montrant qu'une seule machine peut simuler n'importe quel algorithme. Base de la théorie de la calculabilité.</div>
+                        <div class="inv-inventor">👤 Alan Turing</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1938</div>
+                        <div class="inv-title">Z1 — Ordinateur Binaire</div>
+                        <div class="inv-desc">Premier ordinateur mécanique programmable utilisant le système binaire. Programmes stockés sur des bandes perforées externes.</div>
+                        <div class="inv-inventor">👤 Konrad Zuse</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1942</div>
+                        <div class="inv-title">Machine Électronique ABC</div>
+                        <div class="inv-desc">Premier calculateur électronique (non programmable). Utilisait des tubes à vide pour les opérations en binaire. Projet inachevé.</div>
+                        <div class="inv-inventor">👤 Atanasoff & Berry</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1943</div>
+                        <div class="inv-title">Colossus — Tubes à Vide</div>
+                        <div class="inv-desc">Machine secrète britannique pour le déchiffrement. Utilisait 1 500 tubes à vide. Rôle crucial dans la Seconde Guerre mondiale.</div>
+                        <div class="inv-inventor">👤 Tommy Flowers</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1944</div>
+                        <div class="inv-title">Harvard MARK 1</div>
+                        <div class="inv-desc">Ordinateur électromécanique géant (5 tonnes, 15 m de long). 800 km de câbles. Multiplication en 6 secondes.</div>
+                        <div class="inv-inventor">👤 Howard Aiken / IBM</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1947</div>
+                        <div class="inv-title">Transistor</div>
+                        <div class="inv-desc">Composant semi-conducteur remplaçant les tubes à vide. Plus petit, fiable et économe en énergie. Prix Nobel 1956.</div>
+                        <div class="inv-inventor">👤 Bardeen, Brattain, Shockley</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1948</div>
+                        <div class="inv-title">Programme Enregistré</div>
+                        <div class="inv-desc">Le Manchester Baby exécute le premier programme stocké en mémoire. Concrétisation de l'architecture Von Neumann.</div>
+                        <div class="inv-inventor">👤 Tom Kilburn & F. Williams</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1958</div>
+                        <div class="inv-title">Circuit Intégré</div>
+                        <div class="inv-desc">Plusieurs transistors sur un même support. Début de la microélectronique et de la miniaturisation extrême.</div>
+                        <div class="inv-inventor">👤 Jack Kilby (Nobel 2000)</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1969</div>
+                        <div class="inv-title">ARPANET</div>
+                        <div class="inv-desc">Premier réseau informatique à commutation de paquets. Relie 4 universités américaines. Ancêtre d'Internet.</div>
+                        <div class="inv-inventor">👤 DARPA</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1971</div>
+                        <div class="inv-title">Microprocesseur Intel 4004</div>
+                        <div class="inv-desc">Premier processeur sur une puce. 2 300 transistors, 740 kHz. Rend possible l'ordinateur personnel.</div>
+                        <div class="inv-inventor">👤 Ted Hoff / Intel</div>
+                    </div>
+                    <div class="invention-card">
+                        <div class="inv-year">1981</div>
+                        <div class="inv-title">ZX81 — Micro Familial</div>
+                        <div class="inv-desc">Micro-ordinateur abordable (69,95£ en kit). 1 Ko de RAM. Démocratise l'informatique dans les foyers.</div>
+                        <div class="inv-inventor">👤 Clive Sinclair</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Activité Interactive Glisser-Déposer -->
+        <div class="tab-content" id="tab-interactive">
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon pink">🎮</div>
+                    <div>
+                        <div class="section-title">Activité Interactive — Glisser-Déposer</div>
+                        <div class="section-subtitle">Replacez chaque invention dans l'ordre chronologique correct</div>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <span class="info-box-icon">⚡</span>
+                    <div><strong>Instructions :</strong> Glissez chaque carte depuis la colonne de gauche et déposez-la dans la bonne position chronologique à droite. Les cartes sont mélangées — à vous de retrouver le bon ordre !</div>
+                </div>
+
+                <div class="dnd-container">
+                    <!-- Source Panel -->
+                    <div class="dnd-panel" id="sourcePanel">
+                        <div class="dnd-panel-title">📦 Événements à placer</div>
+                        <div id="sourceItems">
+                            <!-- Items will be generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Target Panel -->
+                    <div class="dnd-panel" id="targetPanel">
+                        <div class="dnd-panel-title">📅 Frise Chronologique (ordre croissant)</div>
+                        <div id="targetZones">
+                            <!-- Drop zones will be generated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="justify-content: center; margin-top: 24px;">
+                    <button class="btn btn-success" onclick="checkDnDOrder()">
+                        ✅ Vérifier l'ordre
+                    </button>
+                    <button class="btn btn-warning" onclick="resetDnD()">
+                        🔄 Réinitialiser
+                    </button>
+                    <button class="btn btn-secondary" onclick="showHint()">
+                        💡 Indice
+                    </button>
+                </div>
+
+                <div class="score-panel" id="dndScorePanel" style="display: none;">
+                    <div class="score-value" id="dndScore">0/12</div>
+                    <div class="score-label">Événements correctement placés</div>
+                    <div class="progress-container" style="margin-top: 16px;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="dndProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Quiz -->
+        <div class="tab-content" id="tab-quiz">
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon green">❓</div>
+                    <div>
+                        <div class="section-title">Quiz — Testez vos connaissances</div>
+                        <div class="section-subtitle">10 questions sur l'histoire de l'informatique</div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Progression</span>
+                        <span class="progress-value" id="quizProgressText">0/10</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div id="quizContainer" style="margin-top: 24px;">
+                    <!-- Quiz items generated by JS -->
+                </div>
+
+                <div class="btn-group" style="justify-content: center; margin-top: 24px;">
+                    <button class="btn btn-success" onclick="checkQuiz()">
+                        ✅ Valider mes réponses
+                    </button>
+                    <button class="btn btn-warning" onclick="resetQuiz()">
+                        🔄 Recommencer
+                    </button>
+                </div>
+
+                <div class="score-panel" id="quizScorePanel" style="display: none;">
+                    <div class="score-value" id="quizScore">0/10</div>
+                    <div class="score-label">Réponses correctes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Barème -->
+        <div class="tab-content" id="tab-bareme">
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon orange">📊</div>
+                    <div>
+                        <div class="section-title">Barème d'Évaluation</div>
+                        <div class="section-subtitle">Notation détaillée sur 20 points</div>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <span class="info-box-icon">📌</span>
+                    <div>Le barème évalue à la fois les <strong>compétences techniques</strong> (exactitude, chronologie) et les <strong>compétences transversales</strong> (recherche, analyse, présentation).</div>
+                </div>
+
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critère d'évaluation</th>
+                            <th>Description détaillée</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>📋 Exhaustivité des données</strong></td>
+                            <td>
+                                Les 12 événements sont présents avec date, nom et description
+                                <div class="criteria-detail">0 pt : moins de 6 événements · 1 pt : 6-9 événements · 2 pts : 10-11 événements · 3 pts : 12 événements complets</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📅 Exactitude chronologique</strong></td>
+                            <td>
+                                Les dates sont correctes et les événements sont placés dans le bon ordre
+                                <div class="criteria-detail">0 pt : nombreuses erreurs · 1 pt : quelques inversions · 2 pts : 1-2 erreurs mineures · 3 pts : ordre parfait</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔍 Qualité de la recherche</strong></td>
+                            <td>
+                                Informations complémentaires pertinentes : inventeurs, contexte, détails techniques
+                                <div class="criteria-detail">0 pt : aucune recherche · 1 pt : recherche superficielle · 2 pts : bonne documentation · 3 pts : recherche approfondie et sourcée</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✍️ Annotations et explications</strong></td>
+                            <td>
+                                Chaque date est accompagnée d'une explication claire, concise et pertinente
+                                <div class="criteria-detail">0 pt : pas d'annotations · 1 pt : annotations partielles · 2 pts : annotations présentes · 3 pts : annotations détaillées et pertinentes</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🎨 Présentation et esthétique</strong></td>
+                            <td>
+                                Frise lisible, bien organisée, soignée. Utilisation de couleurs, illustrations, mise en page
+                                <div class="criteria-detail">0 pt : illisible · 1 pt : basique · 2 pts : soigné · 3 pts : professionnel, créatif, illustré</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔗 Liens et contexte historique</strong></td>
+                            <td>
+                                Capacité à relier les innovations entre elles et à leur contexte historique (guerre, industrie…)
+                                <div class="criteria-detail">0 pt : aucun lien · 1 pt : quelques liens · 2 pts : bonne contextualisation</div>
+                            </td>
+                            <td class="points">/2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>💡 Réflexion finale</strong></td>
+                            <td>
+                                Argumentation structurée, pertinente et personnelle (minimum 5 lignes)
+                                <div class="criteria-detail">0 pt : absente · 1 pt : réponse courte non argumentée · 2 pts : argumentation correcte · 3 pts : réflexion approfondie et originale</div>
+                            </td>
+                            <td class="points">/3</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>📊 TOTAL</strong></td>
+                            <td class="points">/20</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Grading Scale -->
+                <div style="margin-top: 30px;">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; font-size: 1.2rem;">📈 Échelle d'appréciation</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div style="padding: 16px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; text-align: center;">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: #ef4444;">0 - 7</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Insuffisant</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Travail incomplet ou non réalisé</div>
+                        </div>
+                        <div style="padding: 16px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; text-align: center;">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: #f59e0b;">8 - 11</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Fragile</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Des bases mais lacunes importantes</div>
+                        </div>
+                        <div style="padding: 16px; background: rgba(79, 125, 249, 0.08); border: 1px solid rgba(79, 125, 249, 0.2); border-radius: 12px; text-align: center;">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: #4f7df9;">12 - 15</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Satisfaisant</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Travail correctement réalisé</div>
+                        </div>
+                        <div style="padding: 16px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; text-align: center;">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: #10b981;">16 - 20</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Excellent</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Travail remarquable et approfondi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competences NSI -->
+                <div style="margin-top: 30px;">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; font-size: 1.2rem;">🎓 Compétences NSI mobilisées</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span class="detail-tag tag-concept" style="padding: 8px 16px; font-size: 0.85rem;">Culture informatique</span>
+                        <span class="detail-tag tag-machine" style="padding: 8px 16px; font-size: 0.85rem;">Architecture matérielle</span>
+                        <span class="detail-tag tag-composant" style="padding: 8px 16px; font-size: 0.85rem;">Histoire des sciences</span>
+                        <span class="detail-tag tag-reseau" style="padding: 8px 16px; font-size: 0.85rem;">Réseaux</span>
+                        <span class="detail-tag tag-personnel" style="padding: 8px 16px; font-size: 0.85rem;">Analyse & Synthèse</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: Réflexion -->
+        <div class="tab-content" id="tab-reflexion">
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon pink">💡</div>
+                    <div>
+                        <div class="section-title">Question de Réflexion</div>
+                        <div class="section-subtitle">Argumentation personnelle — 3 points</div>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <div class="reflection-question">
+                        « Quelle invention vous semble la plus importante dans l'histoire de l'informatique ? Justifiez votre réponse en vous appuyant sur des arguments précis. »
+                    </div>
+
+                    <div class="info-box tip" style="margin-bottom: 20px;">
+                        <span class="info-box-icon">📝</span>
+                        <div>
+                            <strong>Consignes :</strong>
+                            <ul style="margin-top: 8px; margin-left: 16px; line-height: 2;">
+                                <li>Rédigez un texte argumenté d'<strong>au minimum 5 lignes</strong></li>
+                                <li>Nommez clairement l'invention choisie et sa date</li>
+                                <li>Donnez <strong>au moins 2 arguments</strong> justifiant votre choix</li>
+                                <li>Expliquez l'<strong>impact</strong> de cette invention sur les développements ultérieurs</li>
+                                <li>Vous pouvez mentionner d'autres inventions pour appuyer votre argumentation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <textarea class="reflection-textarea" id="reflectionText" 
+                        placeholder="Rédigez votre réflexion ici...
+
+Par exemple : « L'invention qui me semble la plus importante est... parce que... 
+Sans cette innovation, nous n'aurions pas... 
+De plus, elle a permis de... »"
+                        oninput="updateCharCount()"></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> caractères · <span id="wordCount">0</span> mots · <span id="lineCount">0</span> lignes
+                    </div>
+                </div>
+
+                <div class="btn-group" style="justify-content: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="saveReflection()">
+                        💾 Sauvegarder ma réflexion
+                    </button>
+                    <button class="btn btn-secondary" onclick="printActivity()">
+                        🖨️ Imprimer l'activité
+                    </button>
+                </div>
+
+                <!-- Pistes de réflexion -->
+                <div style="margin-top: 30px;">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; font-size: 1.1rem;">🧭 Pistes de réflexion pour vous aider</h3>
+                    <div class="objectives-grid">
+                        <div class="objective-item" style="cursor: pointer;" onclick="insertHint('La machine de Turing (1936) est la base théorique de toute l\'informatique. Sans ce concept, aucun ordinateur n\'existerait.')">
+                            <div class="objective-number" style="background: linear-gradient(135deg, #a78bfa, #8b5cf6);">💭</div>
+                            <div class="objective-text">
+                                <strong>Machine de Turing :</strong> Peut-on dire que la théorie est plus importante que la pratique ? Pourquoi le concept précède la machine ?
+                            </div>
+                        </div>
+                        <div class="objective-item" style="cursor: pointer;" onclick="insertHint('Le transistor (1947) a révolutionné l\'électronique. Sans lui, pas de circuit intégré, pas de microprocesseur, pas de smartphone.')">
+                            <div class="objective-number" style="background: linear-gradient(135deg, #6ee7b7, #10b981);">💭</div>
+                            <div class="objective-text">
+                                <strong>Transistor :</strong> Quel composant a permis de miniaturiser toute l'informatique ? En quoi est-il fondamental ?
+                            </div>
+                        </div>
+                        <div class="objective-item" style="cursor: pointer;" onclick="insertHint('ARPANET (1969) a posé les bases d\'Internet. Aujourd\'hui, le monde entier est connecté grâce à cette innovation.')">
+                            <div class="objective-number" style="background: linear-gradient(135deg, #f9a8d4, #ec4899);">💭</div>
+                            <div class="objective-text">
+                                <strong>Internet :</strong> Quelle invention a le plus transformé la société ? La mise en réseau a-t-elle plus changé le monde que l'ordinateur lui-même ?
+                            </div>
+                        </div>
+                        <div class="objective-item" style="cursor: pointer;" onclick="insertHint('Le microprocesseur (1971) a rendu l\'ordinateur personnel possible. De la calculatrice au smartphone, tout en découle.')">
+                            <div class="objective-number" style="background: linear-gradient(135deg, #93b4fd, #4f7df9);">💭</div>
+                            <div class="objective-text">
+                                <strong>Microprocesseur :</strong> Quel composant a permis l'informatique personnelle ? Pourquoi la loi de Moore est-elle si importante ?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-brand">🖥️ Terminale NSI — Histoire de l'Informatique</div>
+            <p>Activité pédagogique interactive · Réalisation d'une frise chronologique</p>
+            <p style="margin-top: 8px;">Outil recommandé : <a href="http://www.frisechronos.fr/DojoMain.htm" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">frisechronos.fr</a></p>
+            <p style="margin-top: 12px; font-size: 0.78rem;">© 2025 — Ressource éducative NSI</p>
+        </footer>
+    </div>
+
+    <!-- Modal Results -->
+    <div class="modal-overlay" id="resultsModal">
+        <div class="modal">
+            <h3 id="modalTitle">🎉 Résultats</h3>
+            <div class="modal-results" id="modalContent">
+            </div>
+            <div class="btn-group" style="justify-content: center; margin-top: 24px;">
+                <button class="btn btn-primary" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // BACKGROUND ANIMATION
+        // ============================================
+        function createParticles() {
+            const bg = document.getElementById('bgAnimation');
+            const colors = ['#4f7df9', '#8b5cf6', '#00d4ff', '#ec4899', '#10b981'];
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 6 + 2;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    background: ${color};
+                    animation-duration: ${Math.random() * 20 + 15}s;
+                    animation-delay: ${Math.random() * 15}s;
+                `;
+                bg.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ============================================
+        // TAB NAVIGATION
+        // ============================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.closest('.nav-tab').classList.add('active');
+            window.scrollTo({ top: 350, behavior: 'smooth' });
+        }
+
+        // ============================================
+        // TIMELINE EXPAND
+        // ============================================
+        function toggleTimelineDetail(item) {
+            const expandable = item.querySelector('.expandable');
+            const btn = item.querySelector('.expand-btn');
+            if (expandable.classList.contains('expanded')) {
+                expandable.classList.remove('expanded');
+                btn.innerHTML = '▼ En savoir plus';
+            } else {
+                expandable.classList.add('expanded');
+                btn.innerHTML = '▲ Réduire';
+            }
+        }
+
+        // ============================================
+        // TIMER
+        // ============================================
+        let timerInterval = null;
+        let totalSeconds = 55 * 60;
+        let remainingSeconds = totalSeconds;
+
+        function startTimer() {
+            if (timerInterval) return;
+            remainingSeconds = totalSeconds;
+            document.getElementById('timerDisplay').classList.add('show');
+            timerInterval = setInterval(() => {
+                remainingSeconds--;
+                if (remainingSeconds <= 0) {
+                    stopTimer();
+                    showNotification('⏰ Temps écoulé ! Finalisez votre travail.', 'error');
+                    return;
+                }
+                const mins = Math.floor(remainingSeconds / 60).toString().padStart(2, '0');
+                const secs = (remainingSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('timerText').textContent = `${mins}:${secs}`;
+                const pct = (remainingSeconds / totalSeconds) * 100;
+                document.getElementById('timerFill').style.width = pct + '%';
+                if (remainingSeconds <= 300) {
+                    document.getElementById('timerFill').style.background = 'linear-gradient(90deg, #ef4444, #f59e0b)';
+                }
+            }, 1000);
+            showNotification('⏱️ Chronomètre démarré — 55 minutes', 'info');
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('timerDisplay').classList.remove('show');
+            document.getElementById('timerFill').style.width = '100%';
+            document.getElementById('timerFill').style.background = 'linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-blue))';
+        }
+
+        // ============================================
+        // NOTIFICATION
+        // ============================================
+        function showNotification(message, type = 'info') {
+            const notif = document.getElementById('notification');
+            const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+            notif.className = `notification ${type}`;
+            notif.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 4000);
+        }
+
+        // ============================================
+        // DRAG AND DROP
+        // ============================================
+        const dndEvents = [
+            { id: 1, year: 1936, name: "Machine universelle (Turing)" },
+            { id: 2, year: 1938, name: "Premier ordinateur" },
+            { id: 3, year: 1938, name: "Z1 — Ordinateur binaire (Zuse)" },
+            { id: 4, year: 1942, name: "Machines électroniques (non achevée)" },
+            { id: 5, year: 1943, name: "Machine à tubes à vide (Colossus)" },
+            { id: 6, year: 1944, name: "MARK 1 — Électromécanique (5 tonnes)" },
+            { id: 7, year: 1947, name: "Transistor (Bell Labs)" },
+            { id: 8, year: 1948, name: "Machine à programmes enregistrés" },
+            { id: 9, year: 1958, name: "Circuit intégré (Kilby)" },
+            { id: 10, year: 1969, name: "Premier réseau Internet (ARPANET)" },
+            { id: 11, year: 1971, name: "Microprocesseur (Intel 4004)" },
+            { id: 12, year: 1981, name: "Micro-ordinateur familial ZX81" }
+        ];
+
+        let draggedItem = null;
+
+        function initDnD() {
+            const sourcePanel = document.getElementById('sourceItems');
+            const targetPanel = document.getElementById('targetZones');
+
+            // Shuffle events
+            const shuffled = [...dndEvents].sort(() => Math.random() - 0.5);
+
+            // Create draggable items
+            shuffled.forEach(ev => {
+                const item = document.createElement('div');
+                item.className = 'draggable-item';
+                item.draggable = true;
+                item.dataset.id = ev.id;
+                item.dataset.year = ev.year;
+                item.innerHTML = `
+                    <span class="drag-handle">⠿</span>
+                    <span class="item-year">${ev.year}</span>
+                    <span class="item-name">${ev.name}</span>
+                `;
+
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = item;
+                    setTimeout(() => item.style.opacity = '0.4', 0);
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.style.opacity = '1';
+                    draggedItem = null;
+                    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+                });
+
+                // Touch support
+                item.addEventListener('touchstart', (e) => {
+                    draggedItem = item;
+                    item.style.opacity = '0.6';
+                });
+
+                item.addEventListener('touchend', (e) => {
+                    item.style.opacity = '1';
+                    const touch = e.changedTouches[0];
+                    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const zone = target?.closest('.drop-zone');
+                    if (zone && !zone.querySelector('.draggable-item')) {
+                        zone.innerHTML = '';
+                        zone.appendChild(draggedItem);
+                    }
+                    draggedItem = null;
+                });
+
+                sourcePanel.appendChild(item);
+            });
+
+            // Create drop zones
+            for (let i = 1; i <= 12; i++) {
+                const zoneWrapper = document.createElement('div');
+                zoneWrapper.innerHTML = `<div class="drop-zone-label">Position ${i}</div>`;
+                const zone = document.createElement('div');
+                zone.className = 'drop-zone';
+                zone.dataset.position = i;
+                zone.innerHTML = `<span class="placeholder-text">Déposez un événement ici</span>`;
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    if (draggedItem && !zone.querySelector('.draggable-item')) {
+                        zone.innerHTML = '';
+                        zone.appendChild(draggedItem);
+                    }
+                });
+
+                zoneWrapper.appendChild(zone);
+                targetPanel.appendChild(zoneWrapper);
+            }
+        }
+
+        function checkDnDOrder() {
+            const zones = document.querySelectorAll('#targetZones .drop-zone');
+            let correctCount = 0;
+            const correctOrder = dndEvents.map(e => e.id);
+
+            zones.forEach((zone, index) => {
+                const item = zone.querySelector('.draggable-item');
+                if (item) {
+                    const itemId = parseInt(item.dataset.id);
+                    if (itemId === correctOrder[index]) {
+                        item.classList.add('correct');
+                        item.classList.remove('incorrect');
+                        correctCount++;
+                    } else {
+                        item.classList.add('incorrect');
+                        item.classList.remove('correct');
+                    }
+                }
+            });
+
+            const scorePanel = document.getElementById('dndScorePanel');
+            scorePanel.style.display = 'block';
+            document.getElementById('dndScore').textContent = `${correctCount}/12`;
+            document.getElementById('dndProgress').style.width = `${(correctCount / 12) * 100}%`;
+
+            if (correctCount === 12) {
+                showNotification('🎉 Parfait ! Toutes les positions sont correctes !', 'success');
+                launchConfetti();
+            } else if (correctCount >= 8) {
+                showNotification(`👏 Bon travail ! ${correctCount}/12 correctes`, 'info');
+            } else {
+                showNotification(`⚠️ ${correctCount}/12 correctes. Continuez !`, 'error');
+            }
+        }
+
+        function resetDnD() {
+            const sourcePanel = document.getElementById('sourceItems');
+            const targetPanel = document.getElementById('targetZones');
+
+            // Move all items back to source
+            document.querySelectorAll('#targetZones .draggable-item').forEach(item => {
+                item.classList.remove('correct', 'incorrect');
+                sourcePanel.appendChild(item);
+            });
+
+            // Reset drop zones
+            document.querySelectorAll('#targetZones .drop-zone').forEach(zone => {
+                zone.innerHTML = `<span class="placeholder-text">Déposez un événement ici</span>`;
+            });
+
+            document.getElementById('dndScorePanel').style.display = 'none';
+            showNotification('🔄 Activité réinitialisée', 'info');
+        }
+
+        function showHint() {
+            const hints = [
+                "💡 L'événement le plus ancien est en 1936 (Machine de Turing)",
+                "💡 Deux événements se passent en 1938",
+                "💡 Le transistor (1947) précède le circuit intégré (1958)",
+                "💡 ARPANET (1969) est avant le microprocesseur (1971)",
+                "💡 Le ZX81 (1981) est le dernier événement de la liste",
+                "💡 Ordre : concept théorique → machines → composants → réseau → informatique personnelle"
+            ];
+            const randomHint = hints[Math.floor(Math.random() * hints.length)];
+            showNotification(randomHint, 'info');
+        }
+
+        // ============================================
+        // QUIZ
+        // ============================================
+        const quizQuestions = [
+            {
+                question: "En quelle année Alan Turing a-t-il proposé le concept de machine universelle ?",
+                options: ["1934", "1936", "1938", "1940"],
+                correct: 1
+            },
+            {
+                question: "Qui a construit le Z1, premier ordinateur mécanique en binaire ?",
+                options: ["Alan Turing", "John von Neumann", "Konrad Zuse", "Charles Babbage"],
+                correct: 2
+            },
+            {
+                question: "Combien pesait l'ordinateur électromécanique MARK 1 ?",
+                options: ["1 tonne", "3 tonnes", "5 tonnes", "10 tonnes"],
+                correct: 2
+            },
+            {
+                question: "Le transistor a été inventé en quelle année ?",
+                options: ["1943", "1945", "1947", "1950"],
+                correct: 2
+            },
+            {
+                question: "Quel est le nom du premier réseau ancêtre d'Internet ?",
+                options: ["INTERNET", "ARPANET", "ETHERNET", "USENET"],
+                correct: 1
+            },
+            {
+                question: "Le circuit intégré a été inventé par :",
+                options: ["Gordon Moore", "Jack Kilby", "Ted Hoff", "Robert Noyce"],
+                correct: 1
+            },
+            {
+                question: "Quel était le premier microprocesseur commercial ?",
+                options: ["Intel 8080", "Intel 4004", "Zilog Z80", "MOS 6502"],
+                correct: 1
+            },
+            {
+                question: "Le Manchester Baby (1948) est le premier ordinateur à :",
+                options: ["Utiliser des tubes à vide", "Exécuter un programme enregistré en mémoire", "Se connecter à un réseau", "Utiliser un écran"],
+                correct: 1
+            },
+            {
+                question: "Le ZX81 est un micro-ordinateur familial sorti en :",
+                options: ["1979", "1980", "1981", "1983"],
+                correct: 2
+            },
+            {
+                question: "Le Colossus (1943) était utilisé pour :",
+                options: ["Les calculs scientifiques", "Le décryptage de codes", "La gestion administrative", "Les jeux vidéo"],
+                correct: 1
+            }
+        ];
+
+        let quizAnswers = new Array(quizQuestions.length).fill(-1);
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, qi) => {
+                const item = document.createElement('div');
+                item.className = 'quiz-item';
+                item.id = `quiz-item-${qi}`;
+
+                let optionsHTML = '';
+                q.options.forEach((opt, oi) => {
+                    optionsHTML += `
+                        <div class="quiz-option" id="quiz-opt-${qi}-${oi}" onclick="selectQuizOption(${qi}, ${oi})">
+                            <div class="quiz-radio"></div>
+                            <span>${opt}</span>
+                        </div>
+                    `;
+                });
+
+                item.innerHTML = `
+                    <div class="quiz-question">
+                        <div class="quiz-question-number">${qi + 1}</div>
+                        <span>${q.question}</span>
+                    </div>
+                    <div class="quiz-options">${optionsHTML}</div>
+                `;
+
+                container.appendChild(item);
+            });
+        }
+
+        function selectQuizOption(qi, oi) {
+            // Deselect all options for this question
+            quizQuestions[qi].options.forEach((_, i) => {
+                document.getElementById(`quiz-opt-${qi}-${i}`).classList.remove('selected');
+            });
+            // Select clicked option
+            document.getElementById(`quiz-opt-${qi}-${oi}`).classList.add('selected');
+            quizAnswers[qi] = oi;
+
+            // Update progress
+            const answered = quizAnswers.filter(a => a !== -1).length;
+            document.getElementById('quizProgressText').textContent = `${answered}/10`;
+            document.getElementById('quizProgress').style.width = `${(answered / 10) * 100}%`;
+        }
+
+        function checkQuiz() {
+            let correct = 0;
+            quizQuestions.forEach((q, qi) => {
+                q.options.forEach((_, oi) => {
+                    const el = document.getElementById(`quiz-opt-${qi}-${oi}`);
+                    el.classList.remove('correct-answer', 'wrong-answer');
+                    el.style.pointerEvents = 'none';
+
+                    if (oi === q.correct) {
+                        el.classList.add('correct-answer');
+                    } else if (quizAnswers[qi] === oi) {
+                        el.classList.add('wrong-answer');
+                    }
+                });
+
+                if (quizAnswers[qi] === q.correct) correct++;
+            });
+
+            const scorePanel = document.getElementById('quizScorePanel');
+            scorePanel.style.display = 'block';
+            document.getElementById('quizScore').textContent = `${correct}/10`;
+
+            if (correct === 10) {
+                showNotification('🎉 Score parfait ! 10/10 !', 'success');
+                launchConfetti();
+            } else if (correct >= 7) {
+                showNotification(`👏 Bon résultat : ${correct}/10`, 'info');
+            } else {
+                showNotification(`📚 ${correct}/10 — Révisez la frise !`, 'error');
+            }
+
+            // Show modal with details
+            showResultsModal(correct, 10, 'quiz');
+        }
+
+        function resetQuiz() {
+            quizAnswers = new Array(quizQuestions.length).fill(-1);
+            initQuiz();
+            document.getElementById('quizScorePanel').style.display = 'none';
+            document.getElementById('quizProgressText').textContent = '0/10';
+            document.getElementById('quizProgress').style.width = '0%';
+            showNotification('🔄 Quiz réinitialisé', 'info');
+        }
+
+        // ============================================
+        // RESULTS MODAL
+        // ============================================
+        function showResultsModal(score, total, type) {
+            const modal = document.getElementById('resultsModal');
+            const content = document.getElementById('modalContent');
+            const pct = Math.round((score / total) * 100);
+            let level, message, className;
+
+            if (pct >= 80) {
+                level = 'excellent';
+                message = '🌟 Excellent travail !';
+                className = 'excellent';
+            } else if (pct >= 60) {
+                level = 'good';
+                message = '👍 Bon travail !';
+                className = 'good';
+            } else if (pct >= 40) {
+                level = 'average';
+                message = '📚 À améliorer';
+                className = 'average';
+            } else {
+                level = 'poor';
+                message = '💪 Continuez vos efforts';
+                className = 'poor';
+            }
+
+            content.innerHTML = `
+                <div class="result-circle ${className}">
+                    <div class="result-score">${score}</div>
+                    <div class="result-total">/ ${total}</div>
+                </div>
+                <div class="result-message">${message}</div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    Vous avez obtenu ${pct}% de réponses correctes.
+                    ${pct >= 80 ? 'Vous maîtrisez bien l\'histoire de l\'informatique !' : 
+                      pct >= 60 ? 'Quelques révisions vous permettront d\'atteindre l\'excellence.' :
+                      'Relisez attentivement la frise chronologique et recommencez.'}
+                </p>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('resultsModal').classList.remove('show');
+        }
+
+        // ============================================
+        // REFLECTION
+        // ============================================
+        function updateCharCount() {
+            const text = document.getElementById('reflectionText').value;
+            document.getElementById('charCount').textContent = text.length;
+            document.getElementById('wordCount').textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+            document.getElementById('lineCount').textContent = text ? text.split('\n').length : 0;
+        }
+
+        function saveReflection() {
+            const text = document.getElementById('reflectionText').value;
+            if (text.trim().length < 50) {
+                showNotification('⚠️ Votre réflexion est trop courte (minimum 5 lignes)', 'error');
+                return;
+            }
+            localStorage.setItem('nsi_reflection', text);
+            showNotification('💾 Réflexion sauvegardée avec succès !', 'success');
+        }
+
+        function insertHint(hint) {
+            const textarea = document.getElementById('reflectionText');
+            if (textarea.value.length > 0) {
+                textarea.value += '\n\n' + hint;
+            } else {
+                textarea.value = hint;
+            }
+            updateCharCount();
+            textarea.focus();
+        }
+
+        // Load saved reflection
+        function loadReflection() {
+            const saved = localStorage.getItem('nsi_reflection');
+            if (saved) {
+                document.getElementById('reflectionText').value = saved;
+                updateCharCount();
+            }
+        }
+
+        // ============================================
+        // CONFETTI
+        // ============================================
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#4f7df9', '#8b5cf6', '#00d4ff', '#ec4899', '#10b981', '#f59e0b', '#ef4444'];
+
+            for (let i = 0; i < 80; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 10 + 5;
+                const shape = Math.random() > 0.5 ? '50%' : '0';
+                piece.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    border-radius: ${shape};
+                    animation-duration: ${Math.random() * 2 + 2}s;
+                    animation-delay: ${Math.random() * 0.5}s;
+                `;
+                container.appendChild(piece);
+            }
+
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 4000);
+        }
+
+        // ============================================
+        // PRINT
+        // ============================================
+        function printActivity() {
+            window.print();
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initDnD();
+            initQuiz();
+            loadReflection();
+        });
+
+        // Close modal on overlay click
+        document.getElementById('resultsModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+    </script>
+</body>
+</html>
